@@ -8,7 +8,15 @@ do_install () {
 		mkdir -p ${D}/`dirname $i`
 		install -m 755 tinylogin_wrapper ${D}$i
 	done
+
+        mv ${D}${base_bindir}/login ${D}${base_bindir}/login.${PN}
 }
 
-ALTERNATIVE_${PN} += "login"
-ALTERNATIVE_LINK_NAME[login] = "${base_bindir}/login"
+pkg_postinst_${PN} () {
+        update-alternatives --install ${base_bindir}/login login login.${PN} ${ALTERNATIVE_PRIORITY}
+}
+
+pkg_postrm_${PN} () {
+        update-alternatives --remove ${base_bindir}/login login.${PN}
+}
+
