@@ -1,12 +1,12 @@
 DESCRIPTION = "Image with SELinux support" 
 
-IMAGE_FEATURES += "splash ssh-server-openssh"
+IMAGE_FEATURES += "apps-console-core ssh-server-openssh"
 
 LICENSE = "MIT"
 
 IMAGE_INSTALL = "\
 	${CORE_IMAGE_BASE_INSTALL} \
-	packagegroup-core-basic \
+	task-core-basic \
 	task-core-selinux \
 "   
 
