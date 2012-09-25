@@ -9,12 +9,12 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=84b4d2c6ef954a2d4081e775a270d0d0"
 DEFAULT_PREFERENCE = "-1"
 
 include selinux_git.inc
-inherit lib_package pythonnative
+inherit lib_package
 
 SRCREV = "339f8079d7b9dd1e0b0138e2d096dc7c60b2092e"
 PV = "2.1.9+git${SRCPV}"
 
-DEPENDS += "libsepol python swig-native"
+DEPENDS += "libsepol python swig-native python-native"
 
 PACKAGES += "${PN}-python"
 FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/selinux/*"

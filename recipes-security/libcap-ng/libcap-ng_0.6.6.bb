@@ -13,12 +13,12 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f \
 SRC_URI = "http://people.redhat.com/sgrubb/libcap-ng/libcap-ng-${PV}.tar.gz \
 	   file://python.patch"
 
-inherit lib_package autotools pythonnative
+inherit lib_package autotools
 
 SRC_URI[md5sum] = "eb71f967cecb44b4342baac98ef8cb0f"
 SRC_URI[sha256sum] = "89589a29a6b19068edd650dd4f626c10e84bfe63eacae7b1fd1f98f3ac8ea00d"
 
-DEPENDS += "swig-native python"
+DEPENDS += "swig-native python-native python"
 
 EXTRA_OEMAKE += "PYLIBVER='python${PYTHON_BASEVERSION}' PYINC='${STAGING_INCDIR}/${PYLIBVER}'"
 

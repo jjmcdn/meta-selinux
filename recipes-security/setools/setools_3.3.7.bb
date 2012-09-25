@@ -33,7 +33,7 @@ LIC_FILES_CHKSUM = "file://${S}/COPYING;md5=26035c503c68ae1098177934ac0cc795 \
                     file://${S}/COPYING.GPL;md5=751419260aa954499f7abaabaa882bbe \
                     file://${S}/COPYING.LGPL;md5=fbc093901857fcd118f065f900982c24"
 
-DEPENDS += "python libsepol libselinux libxml2"
+DEPENDS += "python libsepol libselinux libxml2 python-native"
 
 PACKAGES += "${PN}-libs ${PN}-console"
 
@@ -73,7 +73,7 @@ FILES_${PN}-console = "\
 	${mandir}/man1/sesearch.1.gz \
 	"
 
-inherit autotools pythonnative
+inherit autotools
 
 # need to export these variables for python-config to work
 export BUILD_SYS

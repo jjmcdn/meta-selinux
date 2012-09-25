@@ -22,7 +22,7 @@ PAM_SRC_URI = "file://pam.d/newrole \
                file://pam.d/run_init \
               "
 
-DEPENDS += "libsepol libselinux libsemanage"
+DEPENDS += "libsepol libselinux libsemanage python-native"
 DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
 EXTRA_DEPENDS = "libcap-ng libcgroup"
 EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
@@ -53,8 +53,6 @@ FILES_${PN}-python = "${libdir}/python${PYTHON_BASEVERSION}/site-packages/*"
 FILES_${PN}-sandbox = "${datadir}/sandbox/*"
 FILES_${PN}-sandbox += "${bindir}/sandbox"
 FILES_${PN}-sandbox += "${sbindir}/seunshare"
-
-inherit pythonnative
 
 AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/libaudit.h `"
 PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"

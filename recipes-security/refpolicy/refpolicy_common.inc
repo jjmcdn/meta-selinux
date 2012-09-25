@@ -8,12 +8,12 @@ S = "${WORKDIR}/refpolicy"
 FILES_${PN} = "${sysconfdir}/selinux/${POLICY_NAME}/ \
 	${datadir}/selinux/${POLICY_NAME}/"
 
-DEPENDS += "checkpolicy-native policycoreutils-native m4-native"
+DEPENDS += "checkpolicy-native policycoreutils-native m4-native python-native"
 RDEPENDS_${PN} += "policycoreutils"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-inherit autotools pythonnative
+inherit autotools
 
 PARALLEL_MAKE = ""
 

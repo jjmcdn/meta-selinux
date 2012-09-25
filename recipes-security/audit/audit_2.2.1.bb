@@ -17,12 +17,12 @@ SRC_URI += "file://2.2.1-audit-for-cross-compiling.patch \
 	   file://sbin-in-usr.patch \
 	   file://auditd"
 
-inherit autotools pythonnative
+inherit autotools
 
 SRC_URI[md5sum] = "dc099fcb2f9242d47ecc35b46d71dfd1"
 SRC_URI[sha256sum] = "9865ca89f5b975ccf25441ddf45a874448f2bba944005aa8cd5e3c3148713a63"
 
-DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30)"
+DEPENDS += "python tcp-wrappers libcap-ng linux-libc-headers (>= 2.6.30) python-native"
 
 EXTRA_OECONF += "--without-prelude \
 	--with-libwrap \
