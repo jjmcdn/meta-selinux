@@ -1,4 +1,4 @@
-PR .= ".2"
+PR .= ".3"
 
 do_install () {
 	install -d ${D}${base_bindir}
@@ -10,13 +10,16 @@ do_install () {
 	done
 
         mv ${D}${base_bindir}/login ${D}${base_bindir}/login.${PN}
+        mv ${D}${bindir}/passwd ${D}${bindir}/passwd.${PN}
 }
 
 pkg_postinst_${PN} () {
         update-alternatives --install ${base_bindir}/login login login.${PN} ${ALTERNATIVE_PRIORITY}
+        update-alternatives --install ${bindir}/passwd passwd passwd.${PN} ${ALTERNATIVE_PRIORITY}
 }
 
 pkg_postrm_${PN} () {
         update-alternatives --remove ${base_bindir}/login login.${PN}
+        update-alternatives --remove ${bindir}/passwd passwd.${PN}
 }
 
