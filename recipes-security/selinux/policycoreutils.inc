@@ -1,4 +1,4 @@
-PRINC = "1"
+PRINC = "2"
 
 SUMMARY = "SELinux policy core utilities"
 DESCRIPTION = "policycoreutils contains the policy core utilities that are required \
@@ -16,9 +16,9 @@ PAM_SRC_URI = "file://pam.d/newrole \
               "
 
 DEPENDS += "libsepol libselinux libsemanage python-native"
-DEPENDS += "${@['', '${EXTRA_DEPENDS}']['${PN}' != '${BPN}-native']}"
-EXTRA_DEPENDS = "libcap-ng libcgroup"
-EXTRA_DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam audit', '', d)}"
+
+inherit selinux
+DEPENDS += "${@target_selinux(d, 'libcap-ng libcgroup libpam audit')}"
 
 RDEPENDS_${BPN} += "\
 	libselinux-python \
@@ -49,7 +49,7 @@ FILES_${PN}-sandbox += "${sbindir}/seunshare"
 
 AUDITH="`ls ${STAGING_INCDIR}/libaudit.h >/dev/null 2>&1 && echo /usr/include/libaudit.h `"
 PAMH="`ls ${STAGING_INCDIR}/security/pam_appl.h >/dev/null 2>&1 && echo /usr/include/security/pam_appl.h `"
-EXTRA_OEMAKE += "${@base_contains('DISTRO_FEATURES', 'pam', 'PAMH=${PAMH} AUDITH=${AUDITH}', 'PAMH= AUDITH= ', d)} INOTIFYH=n"
+EXTRA_OEMAKE += "${@target_selinux(d, 'PAMH=${PAMH} AUDITH=${AUDITH}', 'PAMH= AUDITH= ')} INOTIFYH=n"
 EXTRA_OEMAKE += "PREFIX=${D}"
 EXTRA_OEMAKE += "INITDIR=${D}/etc/init.d"
 
