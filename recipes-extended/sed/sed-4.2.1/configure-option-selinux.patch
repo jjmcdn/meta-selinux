@@ -1,0 +1,67 @@
+Subject: [PATCH] sed: add configure option without-selinux
+
+Upstream-Status: Backport
+
+Signed-off-by: Wenzong Fan <wenzong.fan@windriver.com>
+---
+ m4/selinux-selinux-h.m4 |   29 ++++++++++++++++++++++-------
+ 1 files changed, 22 insertions(+), 7 deletions(-)
+
+diff --git a/m4/selinux-selinux-h.m4 b/m4/selinux-selinux-h.m4
+index 542b4e6..dd92132 100644
+--- a/m4/selinux-selinux-h.m4
++++ b/m4/selinux-selinux-h.m4
+@@ -10,10 +10,14 @@
+ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
+ [
+   AC_REQUIRE([gl_LIBSELINUX])
+-  AC_CHECK_HEADERS([selinux/selinux.h],
++  if test "$with_selinux" != no; then
++    AC_CHECK_HEADERS([selinux/selinux.h],
+ 		   [SELINUX_SELINUX_H=],
+ 		   [SELINUX_SELINUX_H=selinux/selinux.h])
+-  AC_SUBST([SELINUX_SELINUX_H])
++    AC_SUBST([SELINUX_SELINUX_H])
++  else
++    ac_cv_header_selinux_selinux_h="no"
++  fi
+ 
+   case "$ac_cv_search_setfilecon:$ac_cv_header_selinux_selinux_h" in
+     no:*) # already warned
+@@ -28,17 +32,28 @@ AC_DEFUN([gl_LIBSELINUX],
+ [
+   AC_REQUIRE([AC_CANONICAL_HOST])
+   AC_REQUIRE([AC_CANONICAL_BUILD])
++
++  AC_ARG_WITH([selinux],
++    AS_HELP_STRING([--without-selinux], [do not use SELinux, even on systems with SELinux]),
++      [], [with_selinux=maybe])
++
+   LIB_SELINUX=
+-  gl_save_LIBS=$LIBS
+-  AC_SEARCH_LIBS([setfilecon], [selinux],
+-                 [test "$ac_cv_search_setfilecon" = "none required" ||
+-                  LIB_SELINUX=$ac_cv_search_setfilecon])
++  if test "$with_selinux" != no; then
++    gl_save_LIBS=$LIBS
++    AC_SEARCH_LIBS([setfilecon], [selinux],
++               [test "$ac_cv_search_setfilecon" = "none required" ||
++               LIB_SELINUX=$ac_cv_search_setfilecon])
++
++    LIBS=$gl_save_LIBS
++  else
++    ac_cv_search_setfilecon="no"
++  fi
+   AC_SUBST([LIB_SELINUX])
++
+   if test "$ac_cv_search_setfilecon" != no &&
+      test "$ac_cv_header_selinux_selinux_h" != no ; then
+     AC_DEFINE(HAVE_LIBSELINUX, 1, [libselinux enabled])
+   fi
+-  LIBS=$gl_save_LIBS
+ 
+   # Warn if SELinux is found but libselinux is absent;
+   if test "$ac_cv_search_setfilecon" = no &&
+-- 
+1.7.4.1
+
