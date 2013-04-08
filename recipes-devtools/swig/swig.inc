@@ -26,6 +26,6 @@ def swiglib_relpath(d):
     swiglib = d.getVar('datadir', True) + "/" + d.getVar('BPN', True) + "/" + d.getVar('PV', True)
     return os.path.relpath(swiglib, d.getVar('bindir', True))
 
-do_install_append_class-native() {
+do_install_append_virtclass-native() {
 	create_wrapper ${D}${bindir}/swig SWIG_LIB='`dirname $''realpath`'/${@swiglib_relpath(d)}
 }
