@@ -17,11 +17,11 @@ Signed-off-by: Xin Ouyang <Xin.Ouyang@windriver.com>
  find/tree.c      |    6 +++
  8 files changed, 261 insertions(+), 3 deletions(-)
 
-diff --git a/configure.ac b/configure.ac
-index f4849b3..2dd3b13 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -114,6 +114,17 @@ AC_CHECK_LIB([m],[fabs],[FINDLIBS="-lm $FINDLIBS"]
+Index: findutils-4.4.2/configure.ac
+===================================================================
+--- findutils-4.4.2.orig/configure.ac
++++ findutils-4.4.2/configure.ac
+@@ -112,6 +112,17 @@ AC_CHECK_LIB([m],[fabs],[FINDLIBS="-lm $
    AC_DEFINE_UNQUOTED(HAVE_FABS_IN_LIBM,1,[fabs is defined in -lm]))
  AC_SUBST([FINDLIBS])
  
@@ -39,10 +39,10 @@ index f4849b3..2dd3b13 100644
  dnl Checks for header files.
  AC_HEADER_STDC
  dnl Assume unistd.h is present - coreutils does too.
-diff --git a/doc/find.texi b/doc/find.texi
-index 391ffa0..f599bbc 100644
---- a/doc/find.texi
-+++ b/doc/find.texi
+Index: findutils-4.4.2/doc/find.texi
+===================================================================
+--- findutils-4.4.2.orig/doc/find.texi
++++ findutils-4.4.2/doc/find.texi
 @@ -7,7 +7,6 @@
  @c %**end of header
  
@@ -66,15 +66,15 @@ index 391ffa0..f599bbc 100644
  @node Contents
  @section Contents
  
-@@ -1733,6 +1740,7 @@ from the novel you are reading.
+@@ -1734,6 +1741,7 @@ from the novel you are reading.
  * Size Directives::
  * Location Directives::
  * Time Directives::
 +* Other Directives::
- * Formatting Flags::
  @end menu
  
-@@ -1890,6 +1898,14 @@ File's last modification time in the format specified by @var{k}
+ @node Name Directives
+@@ -1890,6 +1898,14 @@ File's last modification time in the for
  (@pxref{Time Formats}).
  @end table
  
@@ -89,10 +89,10 @@ index 391ffa0..f599bbc 100644
  @node Time Formats
  @subsection Time Formats
  
-diff --git a/find/Makefile.am b/find/Makefile.am
-index b001509..6fc7df3 100644
---- a/find/Makefile.am
-+++ b/find/Makefile.am
+Index: findutils-4.4.2/find/Makefile.am
+===================================================================
+--- findutils-4.4.2.orig/find/Makefile.am
++++ findutils-4.4.2/find/Makefile.am
 @@ -26,7 +26,7 @@ endif
  
  EXTRA_DIST = defs.h $(man_MANS)
@@ -102,10 +102,10 @@ index b001509..6fc7df3 100644
  man_MANS = find.1
  SUBDIRS = . testsuite
  
-diff --git a/find/defs.h b/find/defs.h
-index 4539fd9..4f3b168 100644
---- a/find/defs.h
-+++ b/find/defs.h
+Index: findutils-4.4.2/find/defs.h
+===================================================================
+--- findutils-4.4.2.orig/find/defs.h
++++ findutils-4.4.2/find/defs.h
 @@ -48,6 +48,9 @@ Please stop compiling the program now
  #include <stdbool.h>		/* for bool/boolean */
  #include <stdint.h>		/* for uintmax_t */
@@ -148,11 +148,11 @@ index 4539fd9..4f3b168 100644
    /* Optimisation level.  One is the default. 
     */
    unsigned short optimisation_level;
-diff --git a/find/find.1 b/find/find.1
-index 8b67ae3..1d23b17 100644
---- a/find/find.1
-+++ b/find/find.1
-@@ -933,6 +933,8 @@ if \fIc\fR is `l'.  In other words, for symbolic links,
+Index: findutils-4.4.2/find/find.1
+===================================================================
+--- findutils-4.4.2.orig/find/find.1
++++ findutils-4.4.2/find/find.1
+@@ -933,6 +933,8 @@ if \fIc\fR is `l'.  In other words, for 
  checks the type of the file that 
  .B \-type
  does not check.
@@ -161,7 +161,7 @@ index 8b67ae3..1d23b17 100644
  
  .SS ACTIONS
  .IP "\-delete\fR"
-@@ -1354,6 +1356,8 @@ File's type (like in
+@@ -1354,6 +1356,8 @@ File's type (like in 
  U=unknown type (shouldn't happen)
  .IP %Y
  File's type (like %y), plus follow symlinks: L=loop, N=nonexistent
@@ -170,10 +170,10 @@ index 8b67ae3..1d23b17 100644
  .PP
  A `%' character followed by any other character is discarded, but the
  other character is printed (don't rely on this, as further format
-diff --git a/find/parser.c b/find/parser.c
-index 08758ee..02f9067 100644
---- a/find/parser.c
-+++ b/find/parser.c
+Index: findutils-4.4.2/find/parser.c
+===================================================================
+--- findutils-4.4.2.orig/find/parser.c
++++ findutils-4.4.2/find/parser.c
 @@ -53,6 +53,10 @@
  #include <unistd.h>
  #include <sys/stat.h>
@@ -185,7 +185,7 @@ index 08758ee..02f9067 100644
  #if ENABLE_NLS
  # include <libintl.h>
  # define _(Text) gettext (Text)
-@@ -155,6 +159,9 @@ static boolean parse_noignore_race PARAMS((const struct parser_table*, char *arg
+@@ -155,6 +159,9 @@ static boolean parse_noignore_race PARAM
  static boolean parse_warn          PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
  static boolean parse_xtype         PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
  static boolean parse_quit          PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
@@ -195,7 +195,7 @@ index 08758ee..02f9067 100644
  
  boolean parse_print             PARAMS((const struct parser_table*, char *argv[], int *arg_ptr));
  
-@@ -251,6 +258,9 @@ static struct parser_table const parse_table[] =
+@@ -251,6 +258,9 @@ static struct parser_table const parse_t
    PARSE_TEST       ("cmin",                  cmin),	     /* GNU */
    PARSE_TEST       ("cnewer",                cnewer),	     /* GNU */
    {ARG_TEST,       "ctime",                  parse_time, pred_ctime}, /* POSIX */
@@ -205,7 +205,7 @@ index 08758ee..02f9067 100644
    PARSE_POSOPT     ("daystart",              daystart),	     /* GNU */
    PARSE_ACTION     ("delete",                delete), /* GNU, Mac OS, FreeBSD */
    PARSE_OPTION     ("d",                     d), /* Mac OS X, FreeBSD, NetBSD, OpenBSD, but deprecated  in favour of -depth */
-@@ -347,6 +357,89 @@ static struct parser_table const parse_table[] =
+@@ -347,6 +357,89 @@ static struct parser_table const parse_t
  static const char *first_nonoption_arg = NULL;
  static const struct parser_table *noop = NULL;
  
@@ -323,7 +323,7 @@ index 08758ee..02f9067 100644
  	  options.no_leaf_check = true;
  	}
      }
-@@ -1146,8 +1248,14 @@ tests (N can be +N or -N or N): -amin N -anewer FILE -atime N -cmin N\n\
+@@ -1146,8 +1248,14 @@ tests (N can be +N or -N or N): -amin N 
        -nouser -nogroup -path PATTERN -perm [+-]MODE -regex PATTERN\n\
        -readable -writable -executable\n\
        -wholename PATTERN -size N[bcwkMG] -true -type [bcdpflsD] -uid N\n\
@@ -339,7 +339,7 @@ index 08758ee..02f9067 100644
  actions: -delete -print0 -printf FORMAT -fprintf FILE FORMAT -print \n\
        -fprint0 FILE -fprint FILE -ls -fls FILE -prune -quit\n\
        -exec COMMAND ; -exec COMMAND {} + -ok COMMAND ;\n\
-@@ -2574,6 +2682,13 @@ parse_version (const struct parser_table* entry, char **argv, int *arg_ptr)
+@@ -2574,6 +2682,13 @@ parse_version (const struct parser_table
    printf("LEAF_OPTIMISATION ");
    ++features;
  #endif
@@ -353,7 +353,7 @@ index 08758ee..02f9067 100644
  
    flags = 0;
    if (is_fts_enabled(&flags))
-@@ -2608,6 +2723,33 @@ parse_version (const struct parser_table* entry, char **argv, int *arg_ptr)
+@@ -2608,6 +2723,33 @@ parse_version (const struct parser_table
    exit (0);
  }
  
@@ -413,10 +413,10 @@ index 08758ee..02f9067 100644
      case 'H':			/* ARGV element file was found under */
        *fmt++ = 's';
        break;
-diff --git a/find/pred.c b/find/pred.c
-index b1f48a0..43cfd19 100644
---- a/find/pred.c
-+++ b/find/pred.c
+Index: findutils-4.4.2/find/pred.c
+===================================================================
+--- findutils-4.4.2.orig/find/pred.c
++++ findutils-4.4.2/find/pred.c
 @@ -48,6 +48,10 @@
  #include "error.h"
  #include "verify.h"
@@ -471,7 +471,7 @@ index b1f48a0..43cfd19 100644
  	}
        /* end of KIND_FORMAT case */
        break;
-@@ -1844,6 +1877,27 @@ pred_xtype (const char *pathname, struct stat *stat_buf, struct predicate *pred_
+@@ -1844,6 +1877,27 @@ pred_xtype (const char *pathname, struct
     */
    return (pred_type (pathname, &sbuf, pred_ptr));
  }
@@ -499,11 +499,11 @@ index b1f48a0..43cfd19 100644
  
  /*  1) fork to get a child; parent remembers the child pid
      2) child execs the command requested
-diff --git a/find/tree.c b/find/tree.c
-index 60a0601..6d48c09 100644
---- a/find/tree.c
-+++ b/find/tree.c
-@@ -909,6 +909,9 @@ static struct pred_cost_lookup costlookup[] =
+Index: findutils-4.4.2/find/tree.c
+===================================================================
+--- findutils-4.4.2.orig/find/tree.c
++++ findutils-4.4.2/find/tree.c
+@@ -909,6 +909,9 @@ static struct pred_cost_lookup costlooku
      { pred_cmin      ,  NeedsStatInfo,       },
      { pred_cnewer    ,  NeedsStatInfo,       },
      { pred_comma     ,  NeedsNothing,        },
@@ -513,7 +513,7 @@ index 60a0601..6d48c09 100644
      { pred_ctime     ,  NeedsStatInfo,       },
      { pred_delete    ,  NeedsSyncDiskHit     },
      { pred_empty     ,  NeedsStatInfo        },
-@@ -1453,6 +1456,9 @@ get_new_pred (const struct parser_table *entry)
+@@ -1453,6 +1456,9 @@ get_new_pred (const struct parser_table 
    last_pred->p_cost = NeedsUnknown;
    last_pred->arg_text = "ThisShouldBeSetToSomethingElse";
    last_pred->args.str = NULL;
@@ -523,6 +523,3 @@ index 60a0601..6d48c09 100644
    last_pred->pred_next = NULL;
    last_pred->pred_left = NULL;
    last_pred->pred_right = NULL;
--- 
-1.7.9.6
-
